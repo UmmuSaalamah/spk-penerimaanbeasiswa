@@ -1,0 +1,112 @@
+{% extends "admin_base.html" %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto space-y-8">
+
+  <!-- Header -->
+  <div class="flex items-center justify-between">
+    <div>
+      <h2 class="text-3xl font-bold text-blue-700 flex items-center gap-2">
+        <i class="bx bxs-user-account text-4xl"></i>
+        Manajemen Akun Mahasiswa
+      </h2>
+      <p class="text-gray-500 mt-1 text-sm">
+        Kelola akun login mahasiswa penerima beasiswa
+      </p>
+    </div>
+    <span class="bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-semibold">
+      Total: {{ students|length if students else 0 }} Akun
+    </span>
+  </div>
+
+  <!-- Form Tambah Akun -->
+  <div class="bg-white rounded-2xl shadow-lg border">
+    <div class="px-6 py-4 border-b bg-gradient-to-r from-blue-600 to-blue-500 rounded-t-2xl">
+      <h3 class="text-lg font-semibold text-white flex items-center gap-2">
+        <i class="bx bx-user-plus text-xl"></i> Tambah Akun Mahasiswa
+      </h3>
+    </div>
+
+    <form method="POST" action="{{ url_for('admin_students') }}"
+      class="p-6 grid grid-cols-1 md:grid-cols-3 gap-5">
+
+      <div>
+        <label class="block text-sm font-medium mb-1">NIM</label>
+        <input type="text" name="nim" required
+          class="w-full border rounded-xl px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Nama Lengkap</label>
+        <input type="text" name="nama" required
+          class="w-full border rounded-xl px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Password</label>
+        <input type="password" name="password" required
+          class="w-full border rounded-xl px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+      </div>
+
+      <div class="md:col-span-3">
+        <button type="submit"
+          class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-xl shadow transition">
+          <i class="bx bx-plus-circle text-lg"></i>
+          Tambah Akun
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Tabel Akun -->
+  <div class="bg-white rounded-2xl shadow-lg border">
+    <div class="px-6 py-4 border-b flex items-center justify-between">
+      <h3 class="text-lg font-semibold text-gray-700 flex items-center gap-2">
+        <i class="bx bx-list-ul text-xl"></i>
+        Daftar Akun Mahasiswa
+      </h3>
+    </div>
+
+    {% if students %}
+    <div class="overflow-x-auto">
+      <table class="min-w-full text-sm">
+        <thead class="bg-gray-100 text-gray-700">
+          <tr>
+            <th class="px-5 py-3 text-left">No</th>
+            <th class="px-5 py-3 text-left">NIM</th>
+            <th class="px-5 py-3 text-left">Nama</th>
+            <th class="px-5 py-3 text-center">Aksi</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y">
+          {% for s in students %}
+          <tr class="hover:bg-blue-50 transition">
+            <td class="px-5 py-3 font-medium">{{ loop.index }}</td>
+            <td class="px-5 py-3">{{ s.nim }}</td>
+            <td class="px-5 py-3">{{ s.nama }}</td>
+            <td class="px-5 py-3 text-center">
+              <form method="POST"
+                action="{{ url_for('admin_delete', id=s.id) }}"
+                onsubmit="return confirm('Yakin ingin menghapus akun ini?')">
+                <button
+                  class="inline-flex items-center gap-1 text-red-600 hover:text-red-800 font-medium">
+                  <i class="bx bx-trash"></i>
+                  Hapus
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+      <div class="p-6 text-center text-gray-500">
+        <i class="bx bx-info-circle text-3xl mb-2"></i>
+        <p>Belum ada akun mahasiswa</p>
+      </div>
+    {% endif %}
+  </div>
+
+</div>
+{% endblock %}

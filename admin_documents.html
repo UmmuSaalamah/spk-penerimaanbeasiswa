@@ -1,0 +1,33 @@
+{% extends "admin_base.html" %}
+{% block title %}Dokumen{% endblock %}
+
+{% block content %}
+<h3>Dokumen</h3>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Nama Dokumen</th>
+      <th>Aksi</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for d in documents %}
+    <tr>
+      <td>{{ d.nama }}</td>
+      <td>
+        <a href="{{ url_for('static', filename='uploads/' ~ d.filename) }}"
+           target="_blank"
+           class="btn btn-sm btn-primary">
+          Buka
+        </a>
+      </td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="2" class="text-center">Belum ada dokumen</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

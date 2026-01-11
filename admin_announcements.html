@@ -1,0 +1,54 @@
+{% extends "admin_base.html" %}
+{% block title %}Manajemen Pengumuman{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Manajemen Pengumuman</h2>
+
+  <!-- Flash Message -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, msg in messages %}
+        <div class="alert alert-{{ category }}">{{ msg }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <!-- Form Tambah -->
+  <form method="post" class="mb-4">
+    <div class="mb-2">
+      <input name="judul" class="form-control" placeholder="Judul Pengumuman" required>
+    </div>
+    <div class="mb-2">
+      <textarea name="isi" class="form-control" rows="4" placeholder="Isi pengumuman" required></textarea>
+    </div>
+    <button class="btn btn-primary">Tambah Pengumuman</button>
+  </form>
+
+  <!-- Table -->
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Judul</th>
+        <th>Tanggal</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for a in announcements %}
+      <tr>
+        <td>{{ a.judul }}</td>
+        <td>{{ a.created_at }}</td>
+        <td>
+          <form method="post"
+                action="{{ url_for('admin_announcement_delete', id=a.id) }}"
+                onsubmit="return confirm('Hapus pengumuman?')">
+            <button class="btn btn-sm btn-danger">Hapus</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

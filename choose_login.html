@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pilih Login - STIKOM El Rahma</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* ✨ Animasi muncul lembut dari bawah */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in-up {
+      opacity: 0;
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+    .delay-1 { animation-delay: 0.2s; }
+    .delay-2 { animation-delay: 0.4s; }
+    .delay-3 { animation-delay: 0.6s; }
+  </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-50 to-white text-gray-800 font-sans">
+
+  <!-- 🔷 Card Utama -->
+  <div class="bg-white/90 backdrop-blur-sm p-10 rounded-2xl shadow-xl w-full max-w-md text-center fade-in-up">
+
+    <!-- 🖼️ Logo -->
+    <img src="/static/img/Logo STIKOM.png" alt="Logo STIKOM El Rahma"
+         class="w-20 h-20 mx-auto mb-5 rounded-full shadow-md object-contain delay-1 fade-in-up">
+
+    <!-- 🏫 Judul -->
+    <h1 class="text-2xl md:text-3xl font-extrabold text-blue-800 mb-2 delay-2 fade-in-up">Pilih Login</h1>
+    <p class="text-gray-600 mb-8 delay-3 fade-in-up">
+      Silakan pilih jenis akun untuk masuk ke sistem.
+    </p>
+
+    <!-- 🔹 Tombol Login -->
+    <div class="flex flex-col gap-4 fade-in-up delay-3">
+      <a href="{{ url_for('mahasiswa_login') }}"
+         class="bg-blue-600 text-white py-3 rounded-xl font-semibold text-lg hover:bg-blue-700 hover:shadow-lg transition duration-200">
+        Login sebagai Mahasiswa
+      </a>
+
+      <a href="{{ url_for('admin_login') }}"
+         class="bg-gray-800 text-white py-3 rounded-xl font-semibold text-lg hover:bg-gray-900 hover:shadow-lg transition duration-200">
+        Login sebagai Admin
+      </a>
+    </div>
+
+    <!-- 🔙 Kembali -->
+    <div class="mt-8 fade-in-up delay-3">
+      <a href="{{ url_for('index') }}" class="text-sm text-blue-600 hover:underline hover:text-blue-800 transition">
+        ← Kembali ke Beranda
+      </a>
+    </div>
+  </div>
+
+  <!-- 📚 Footer kecil -->
+  <footer class="absolute bottom-4 text-center w-full text-gray-500 text-sm fade-in-up delay-3">
+    &copy; 2025 STIKOM El Rahma | Sistem Beasiswa AHP
+  </footer>
+</body>
+</html>

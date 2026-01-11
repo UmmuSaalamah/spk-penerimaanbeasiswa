@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Admin - STIKOM El Rahma</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-white flex items-center justify-center min-h-screen font-sans">
+
+  <!-- 🧭 Card Login -->
+  <div class="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md border-t-4 border-blue-600">
+    <h1 class="text-2xl font-bold text-center text-blue-700 mb-2">Login Admin</h1>
+    <p class="text-center text-gray-500 text-sm mb-6">Sistem Beasiswa STIKOM El Rahma</p>
+
+    <!-- 🚨 Flash message -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="mb-4 px-4 py-2 rounded-md text-sm 
+                      {% if category == 'success' %}bg-green-100 text-green-700
+                      {% elif category == 'danger' %}bg-red-100 text-red-700
+                      {% elif category == 'warning' %}bg-yellow-100 text-yellow-700
+                      {% else %}bg-gray-100 text-gray-700{% endif %}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <!-- 🧾 Form Login -->
+    <form action="{{ url_for('admin_login') }}" method="POST" class="space-y-5">
+      <div>
+        <label for="username" class="block text-gray-700 font-medium mb-1">Username</label>
+        <input type="text" id="username" name="username" required
+               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      </div>
+
+      <div>
+        <label for="password" class="block text-gray-700 font-medium mb-1">Password</label>
+        <input type="password" id="password" name="password" required
+               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      </div>
+
+      <button type="submit"
+              class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition duration-300">
+        Login
+      </button>
+    </form>
+
+    <!-- 🔑 Tambahkan Reset Password Admin -->
+    <div class="flex justify-center mt-4">
+      <a href="{{ url_for('admin_resetpw') }}"
+         class="text-sm text-blue-600 hover:text-blue-800 hover:underline font-medium">
+        Reset Password?
+      </a>
+    </div>
+
+    <div class="text-center mt-6">
+      <a href="/" class="text-sm text-blue-600 hover:underline">← Kembali ke Beranda</a>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Form Pendaftaran Beasiswa - STIKOM El Rahma</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-white font-sans">
+
+  <!-- 🌐 Navbar -->
+<nav class="bg-white/90 backdrop-blur-md shadow-md fixed w-full z-20 transition duration-300">
+  <div class="max-w-6xl mx-auto px-6 py-3 flex justify-between items-center">
+    
+    <!-- Kiri: Logo + Nama Kampus -->
+    <div class="flex items-center space-x-3">
+      <img src="/static/img/Logo STIKOM.png" alt="Logo STIKOM" class="h-9 w-9 rounded-full shadow-sm">
+      <span class="text-xl font-extrabold text-blue-700 tracking-wide">STIKOM El Rahma</span>
+    </div>
+
+    <!-- Kanan: Navigasi -->
+    <div class="hidden md:flex items-center space-x-8 text-[15px] font-medium">
+      <a href="/" class="text-gray-600 hover:text-blue-700 transition duration-200">Beranda</a>
+      <a href="/form" class="text-blue-700 font-semibold border-b-2 border-blue-700 pb-1">Form Beasiswa</a>
+    </div>
+
+    <!-- Tombol Menu Mobile -->
+    <button id="menu-btn" class="md:hidden focus:outline-none">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-blue-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Menu Dropdown Mobile -->
+  <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+    <a href="/" class="block px-6 py-3 text-gray-600 hover:text-blue-700 hover:bg-blue-50">Beranda</a>
+    <a href="/form" class="block px-6 py-3 text-blue-700 font-semibold bg-blue-50">Form Beasiswa</a>
+    <a href="/admin/login" class="block px-6 py-3 text-gray-600 hover:text-blue-700 hover:bg-blue-50">Login Admin</a>
+  </div>
+</nav>
+
+<script>
+  // JavaScript untuk toggle menu mobile
+  document.getElementById('menu-btn').addEventListener('click', () => {
+    document.getElementById('mobile-menu').classList.toggle('hidden');
+  });
+</script>
+
+
+  <!-- 🧾 Form Section -->
+  <section class="pt-28 pb-16">
+    <div class="container mx-auto max-w-3xl bg-white rounded-2xl shadow-lg p-8 border-t-4 border-blue-600">
+      <h2 class="text-2xl font-bold text-blue-700 mb-6 text-center">Formulir Pendaftaran Beasiswa Mahasiswa Baru</h2>
+
+      <!-- 🔔 Flash Message -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="mb-4 px-4 py-2 rounded-md text-sm 
+                        {% if category == 'success' %}bg-green-100 text-green-700
+                        {% elif category == 'danger' %}bg-red-100 text-red-700
+                        {% else %}bg-gray-100 text-gray-700{% endif %}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <!-- 📝 Form -->
+      <form action="{{ url_for('form') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
+        
+        <!-- Bagian 1: Data Pribadi -->
+        <div>
+          <h3 class="text-lg font-semibold text-blue-700 mb-3">🧍‍♂️ Data Pribadi</h3>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-gray-700 font-medium mb-1">Nama Lengkap</label>
+              <input type="text" name="nama" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div>
+              <label class="block text-gray-700 font-medium mb-1">Tempat, Tanggal Lahir</label>
+              <input type="text" name="ttl" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div>
+              <label class="block text-gray-700 font-medium mb-1">Jenis Kelamin</label>
+              <select name="jk" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                <option value="Laki-laki">Laki-laki</option>
+                <option value="Perempuan">Perempuan</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-gray-700 font-medium mb-1">Agama</label>
+              <input type="text" name="agama" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+            </div>
+          </div>
+        </div>
+
+        <!-- Bagian 2: Data Akademik -->
+<div>
+  <h3 class="text-lg font-semibold text-blue-700 mb-3">🎓 Data Akademik</h3>
+  <div class="grid md:grid-cols-2 gap-4">
+    <div>
+      <label class="block text-gray-700 font-medium mb-1">NIM</label>
+      <input type="text" name="nim" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+    </div>
+    <div>
+      <label class="block text-gray-700 font-medium mb-1">Asal Sekolah</label>
+      <input type="text" name="asal_sekolah" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+    </div>
+            <div>
+              <label class="block text-gray-700 font-medium mb-1">Tahun Lulus</label>
+              <input type="number" name="tahun_lulus" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div>
+              <label class="block text-gray-700 font-medium mb-1">Program Studi Pilihan</label>
+              <input type="text" name="prodi" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div>
+              <label class="block text-gray-700 font-medium mb-1">Nilai Rata-rata / IPK</label>
+              <input type="number" step="0.01" name="ipk" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+            </div>
+          </div>
+        </div>
+
+        <!-- Bagian 3: Data Ekonomi -->
+        <div>
+          <h3 class="text-lg font-semibold text-blue-700 mb-3">💰 Data Ekonomi</h3>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-gray-700 font-medium mb-1">Nama Ayah</label>
+              <input type="text" name="nama_ayah" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div>
+              <label class="block text-gray-700 font-medium mb-1">Pekerjaan Ayah</label>
+              <input type="text" name="pekerjaan_ayah" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div>
+              <label class="block text-gray-700 font-medium mb-1">Nama Ibu</label>
+              <input type="text" name="nama_ibu" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div>
+              <label class="block text-gray-700 font-medium mb-1">Pekerjaan Ibu</label>
+              <input type="text" name="pekerjaan_ibu" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div>
+              <label class="block text-gray-700 font-medium mb-1">Penghasilan Orang Tua (Rp)</label>
+              <input type="number" name="penghasilan" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div>
+              <label class="block text-gray-700 font-medium mb-1">Jumlah Tanggungan</label>
+              <input type="number" name="tanggungan" required class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+            </div>
+          </div>
+        </div>
+
+        <!-- Bagian 4: Upload Berkas -->
+        <div>
+          <h3 class="text-lg font-semibold text-blue-700 mb-3">📎 Upload Berkas Pendukung</h3>
+          <div class="space-y-3">
+            <label class="block text-gray-700 font-medium">Kartu Keluarga / Slip Gaji / Sertifikat Prestasi (PDF/JPG)</label>
+            <input type="file" name="berkas" accept=".pdf,.jpg,.jpeg,.png" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+          </div>
+        </div>
+
+        <!-- Bagian 5: Pernyataan -->
+        <div>
+          <label class="flex items-start space-x-2 text-sm text-gray-700">
+            <input type="checkbox" required class="mt-1">
+            <span>Saya menyatakan bahwa data yang saya isi adalah benar dan dapat dipertanggungjawabkan.</span>
+          </label>
+        </div>
+
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition duration-300">
+          Kirim Pendaftaran
+        </button>
+
+      </form>
+    </div>
+  </section>
+
+  <!-- 📚 Footer -->
+  <footer class="bg-blue-700 text-white text-center py-4 mt-12">
+    <p class="text-sm">&copy; 2025 STIKOM El Rahma | Sistem Beasiswa AHP</p>
+  </footer>
+
+</body>
+</html>

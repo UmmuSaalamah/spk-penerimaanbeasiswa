@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STIKOM El Rahma | Penerimaan Mahasiswa Baru</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* ✨ Animasi lembut saat muncul */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in-up {
+      opacity: 0;
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+    .fade-delay-1 { animation-delay: 0.2s; }
+    .fade-delay-2 { animation-delay: 0.4s; }
+    .fade-delay-3 { animation-delay: 0.6s; }
+    .fade-delay-4 { animation-delay: 0.8s; }
+  </style>
+</head>
+
+<body class="bg-gradient-to-b from-blue-50 to-white font-sans text-gray-800">
+
+  <!-- 🌐 Navbar -->
+  <nav class="bg-white/90 backdrop-blur-md shadow-md fixed w-full z-20 transition duration-300">
+    <div class="max-w-6xl mx-auto px-6 py-3 flex justify-between items-center">
+      
+      <!-- 🔹 Kiri: Logo + Nama Kampus -->
+      <div class="flex items-center space-x-3">
+        <img src="/static/img/Logo STIKOM.png" alt="Logo STIKOM" class="h-9 w-9 rounded-full shadow-sm">
+        <span class="text-xl font-extrabold text-blue-700 tracking-wide">STIKOM El Rahma</span>
+      </div>
+
+      <!-- 🔹 Kanan: Navigasi Desktop -->
+      <div class="hidden md:flex items-center space-x-8 text-[15px] font-medium relative">
+        <a href="/" class="text-blue-700 font-semibold border-b-2 border-blue-700 pb-1">Beranda</a>
+        
+        <!-- 🔽 Dropdown Login -->
+        <div class="relative">
+          <button id="login-btn" class="text-gray-600 hover:text-blue-700 transition duration-200 flex items-center">
+            Login
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ml-1 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+
+          <!-- Menu Dropdown -->
+          <div id="login-dropdown" class="absolute right-0 hidden bg-white shadow-lg rounded-md border border-gray-100 mt-2 w-44 text-sm">
+            <a href="/mahasiswa/login" class="block px-4 py-2 hover:bg-blue-50 text-gray-700 hover:text-blue-700">Login Mahasiswa</a>
+            <a href="/admin/login" class="block px-4 py-2 hover:bg-blue-50 text-gray-700 hover:text-blue-700">Login Admin</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 🔹 Tombol Menu Mobile -->
+      <button id="menu-btn" class="md:hidden focus:outline-none">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-blue-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- 🔹 Menu Dropdown Mobile -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+      <a href="/" class="block px-6 py-3 text-blue-700 font-semibold bg-blue-50 border-l-4 border-blue-600">Beranda</a>
+      <a href="/form" class="block px-6 py-3 text-gray-600 hover:text-blue-700 hover:bg-blue-50">Form Beasiswa</a>
+      
+      <!-- 🔹 Login di Mobile -->
+      <div class="border-t border-gray-100">
+        <p class="px-6 pt-3 text-gray-500 text-sm font-semibold">Login</p>
+        <a href="/mahasiswa/login" class="block px-6 py-3 text-gray-600 hover:text-blue-700 hover:bg-blue-50">Mahasiswa</a>
+        <a href="/admin/login" class="block px-6 py-3 text-gray-600 hover:text-blue-700 hover:bg-blue-50">Admin</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 🔧 Script Navbar -->
+  <script>
+    // Toggle menu mobile
+    document.getElementById('menu-btn').addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+
+    // Toggle dropdown login (desktop)
+    const loginBtn = document.getElementById('login-btn');
+    const dropdown = document.getElementById('login-dropdown');
+
+    loginBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      dropdown.classList.toggle('hidden');
+    });
+
+    // Tutup dropdown jika klik di luar
+    window.addEventListener('click', (e) => {
+      if (!loginBtn.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.classList.add('hidden');
+      }
+    });
+  </script>
+
+  <!-- ✨ Hero Section -->
+  <section class="flex flex-col justify-center items-center text-center min-h-screen px-6 pt-28">
+    
+    <!-- 🖼️ Logo Tengah -->
+    <img src="/static/img/Logo STIKOM.png"
+         alt="Logo STIKOM El Rahma"
+         class="w-24 h-24 md:w-28 md:h-28 mb-6 rounded-full drop-shadow-md object-contain fade-in-up">
+
+    <!-- 🏫 Nama Kampus -->
+    <div class="mb-6 fade-in-up fade-delay-1">
+      <h1 class="text-2xl md:text-3xl font-extrabold text-blue-800">SEKOLAH TINGGI ILMU KOMPUTER EL RAHMA</h1>
+      <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mt-1">STIKOM EL RAHMA</h2>
+      <p class="text-orange-500 font-semibold mt-2 text-sm md:text-base tracking-wide uppercase">
+        Taqwa • Mandiri • Sukses • Mulia
+      </p>
+    </div>
+
+    <!-- 📘 Informasi PMB -->
+    <div class="max-w-2xl bg-white/90 backdrop-blur-sm border border-blue-100 shadow-md rounded-2xl p-8 fade-in-up fade-delay-2">
+      <h3 class="text-2xl md:text-3xl font-bold text-blue-800 mb-2">Penerimaan Mahasiswa Baru</h3>
+      <p class="text-gray-600 text-sm md:text-base leading-relaxed">
+        Penerimaan Mahasiswa Baru <span class="font-semibold text-gray-800">Tahun Ajaran 2025/2026</span> <br>
+        <span class="font-semibold text-blue-800">STIKOM EL RAHMA</span> berupaya membentuk pribadi yang terampil, 
+        berwawasan luas, modern, dan berkepribadian islami.
+      </p>
+
+      <p class="mt-5 text-blue-700 font-semibold text-lg fade-in-up fade-delay-3">
+        Raih Kesuksesanmu bersama STIKOM EL RAHMA
+      </p>
+
+      <a href="{{ url_for('choose_login') }}"
+         class="mt-6 inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition">
+        Daftar Sekarang
+      </a>
+    </div>
+  </section>
+
+  <!-- 📚 Footer -->
+  <footer class="bg-blue-700 text-white text-center py-4 mt-12 fade-in-up fade-delay-4">
+    <p class="text-sm">&copy; 2025 STIKOM El Rahma | Sistem Beasiswa AHP</p>
+  </footer>
+
+</body>
+</html>

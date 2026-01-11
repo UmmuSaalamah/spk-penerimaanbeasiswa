@@ -1,0 +1,40 @@
+{% extends "admin_base.html" %}
+{% block content %}
+
+
+<h3>Perbandingan Kriteria (AHP)</h3>
+<form method="POST">
+<table class="table table-bordered">
+    <tr><th></th>{% for k in data %}<th>{{k.nama}}</th>{% endfor %}</tr>
+
+    {% for i in range(data|length) %}
+    <tr>
+        <th>{{data[i].nama}}</th>
+        {% for j in range(data|length) %}
+            <td><input type="number" step="0.1" name="a{{i}}{{j}}" class="form-control" value="1" required></td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+{% if bobot %}
+<hr>
+<h4>Hasil Bobot Kriteria</h4>
+<table class="table table-striped">
+  <tr>
+    <th>Kriteria</th>
+    <th>Bobot</th>
+  </tr>
+  {% for i in range(data|length) %}
+  <tr>
+    <td>{{ data[i].nama }}</td>
+    <td>{{ bobot[i] }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<button class="btn btn-primary w-100">Proses AHP</button>
+</form>
+
+{% endblock %}

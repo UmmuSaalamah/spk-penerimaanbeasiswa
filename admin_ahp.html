@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Perhitungan AHP - Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans">
+
+  <nav class="bg-blue-700 text-white fixed w-full z-10">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-lg font-bold">Dashboard Admin Beasiswa</h1>
+      <div class="flex items-center space-x-4">
+        <a href="/admin/dashboard" class="text-sm hover:underline">Dashboard</a>
+        <a href="/admin/logout" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container mx-auto pt-28 px-6 pb-12">
+    <h2 class="text-2xl font-bold text-blue-700 mb-4">Perhitungan AHP & Ranking</h2>
+
+    <!-- Form bobot -->
+    <div class="bg-white rounded-lg shadow p-6 mb-6">
+      <form action="{{ url_for('admin_ahp') }}" method="POST" class="grid md:grid-cols-4 gap-4 items-end">
+        <div>
+          <label class="text-sm text-gray-600">Bobot IPK (benefit)</label>
+          <input type="number" step="0.01" name="w_ipk" value="{{ weights.ipk }}" class="w-full px-3 py-2 border rounded" />
+        </div>
+        <div>
+          <label class="text-sm text-gray-600">Bobot Penghasilan (cost)</label>
+          <input type="number" step="0.01" name="w_penghasilan" value="{{ weights.penghasilan }}" class="w-full px-3 py-2 border rounded" />
+        </div>
+        <div>
+          <label class="text-sm text-gray-600">Bobot Tanggungan (benefit)</label>
+          <input type="number" step="0.01" name="w_tanggungan" value="{{ weights.tanggungan }}" class="w-full px-3 py-2 border rounded" />
+        </div>
+        <div>
+          <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">Hitung & Tampilkan Ranking</button>
+        </div>
+      </form>
+      <p class="text-xs text-gray-500 mt-2">Masukkan bobot kriteria; sistem akan normalisasi otomatis (total akan jadi 1).</p>
+    </div>
+
+    <!-- Tabel hasil -->
+    <div class="bg-white rounded-lg shadow overflow-x-auto">
+      <table class="min-w-full text-sm text-left text-gray-600">
+        <thead class="bg-blue-50 border-b">
+          <tr>
+            <th class="py-3 px-4">No</th>
+            <th class="py-3 px-4">Nama</th>
+            <th class="py-3 px-4">NIM</th>
+            <th class="py-3 px-4">IPK</th>
+            <th class="py-3 px-4">Penghasilan</th>
+            <th class="py-3 px-4">Tanggungan</th>
+            <th class="py-3 px-4">Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if applicants %}
+            {% for a in applicants %}
+            <tr class="border-b hover:bg-gray-50">
+              <td class="py-3 px-4">{{ loop.index }}</td>
+              <td class="py-3 px-4">{{ a.nama }}</td>
+              <td class="py-3 px-4">{{ a.nim }}</td>
+              <td class="py-3 px-4">{{ a.ipk }}</td>
+              <td class="py-3 px-4">{{ "{:,.0f}".format(a.penghasilan) }}</td>
+              <td class="py-3 px-4">{{ a.tanggungan }}</td>
+              <td class="py-3 px-4 font-semibold">{{ a.score if a.score is defined else "-" }}</td>
+            </tr>
+            {% endfor %}
+          {% else %}
+            <tr>
+              <td colspan="7" class="p-4 text-center text-gray-500">Belum ada data pendaftar.</td>
+            </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <footer class="bg-blue-700 text-white text-center py-4 mt-12">
+    <p class="text-sm">&copy; 2025 STIKOM El Rahma | Sistem Beasiswa AHP</p>
+  </footer>
+
+</body>
+</html>

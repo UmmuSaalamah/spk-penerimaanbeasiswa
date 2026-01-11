@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Admin - STIKOM El Rahma</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-50 font-sans">
+
+  <!-- Navbar -->
+<nav class="bg-blue-700 text-white shadow-lg fixed w-full z-50">
+  <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+    
+    <!-- Logo + Brand -->
+    <div class="flex items-center space-x-2">
+      <img src="/static/img/Logo STIKOM.png" alt="Logo" class="h-10 w-10 rounded-full border-2 border-white">
+      <span class="text-xl font-bold tracking-wide">STIKOM El Rahma | Admin</span>
+    </div>
+
+    <a href="{{ url_for('admin_kriteria') }}"
+   class="px-3 py-2 rounded hover:bg-blue-600 flex items-center gap-1">
+  <i class="bx bx-list-check"></i> Kriteria
+</a>
+<a href="{{ url_for('admin_subkriteria') }}"
+ class="px-3 py-2 rounded hover:bg-blue-600 flex items-center gap-1">
+ <i class="bx bx-list-ul"></i> Sub Kriteria
+</a>
+
+<!-- Data Siswa -->
+<a href="{{ url_for('admin_students') }}" class="px-3 py-2 rounded hover:bg-blue-600 flex items-center gap-1">
+  <i class="bx bxs-user-detail"></i> Data Siswa
+</a>
+
+<!-- Dropdown Proses AHP -->
+<div class="relative group">
+  <button class="px-3 py-2 rounded hover:bg-blue-600 flex items-center gap-1">
+    <i class="bx bx-line-chart"></i> Proses AHP <i class="bx bx-chevron-down"></i>
+  </button>
+  <div class="absolute left-0 mt-2 w-56 bg-white text-gray-700 rounded shadow-lg
+              opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all">
+
+    <a href="{{ url_for('admin_pairwise') }}" class="block px-4 py-2 hover:bg-blue-100">
+      Matriks Perbandingan
+    </a>
+
+    <a href="{{ url_for('admin_hasil') }}" class="block px-4 py-2 hover:bg-blue-100">
+      Hasil Perangkingan
+    </a>
+
+    <form action="{{ url_for('admin_run_ahp') }}" method="POST">
+      <button class="w-full text-left px-4 py-2 hover:bg-blue-100">
+        Hitung AHP
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- User -->
+<a href="{{ url_for('admin_users') }}" class="px-3 py-2 rounded hover:bg-blue-600 flex items-center gap-1">
+  <i class="bx bxs-user"></i> User
+</a>
+
+
+      <!-- Logout -->
+      <a href="{{ url_for('admin_logout') }}" class="bg-red-500 hover:bg-red-600 transition text-white px-4 py-2 rounded-lg flex items-center gap-1">
+        <i class="bx bx-log-out"></i> Logout
+      </a>
+    </div>
+
+    <!-- Mobile Button -->
+    <div class="md:hidden flex items-center">
+      <button id="mobile-menu-btn" class="focus:outline-none">
+        <i class="bx bx-menu text-3xl"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden md:hidden bg-blue-600 text-white">
+    <a href="{{ url_for('admin_dashboard') }}" class="block px-4 py-2 hover:bg-blue-500">Dashboard</a>
+    <a href="{{ url_for('admin_students') }}" class="block px-4 py-2 hover:bg-blue-500">Data Pendaftar</a>
+    <a href="{{ url_for('form') }}" class="block px-4 py-2 hover:bg-blue-500">Tambah Pendaftar</a>
+    <a href="{{ url_for('admin_pairwise') }}" class="block px-4 py-2 hover:bg-blue-500">Input Penilaian</a>
+    <a href="{{ url_for('admin_hasil') }}" class="block px-4 py-2 hover:bg-blue-500">Hasil AHP</a>
+    <a href="{{ url_for('admin_announcements') }}" class="block px-4 py-2 hover:bg-blue-500">Pengumuman</a>
+    <a href="{{ url_for('admin_documents') }}" class="block px-4 py-2 hover:bg-blue-500">Dokumen</a>
+    <a href="{{ url_for('admin_logout') }}" class="block px-4 py-2 hover:bg-red-500">Logout</a>
+  </div>
+</nav>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  btn.addEventListener('click', () => {
+    menu.classList.toggle('hidden');
+  });
+</script>
+
+
+  <!-- Konten -->
+  <main class="pt-28 pb-12 px-6 container mx-auto">
+
+    <!-- Judul -->
+    <h2 class="text-3xl font-extrabold text-blue-800 mb-8 flex items-center gap-2">
+      <i class="bx bxs-dashboard text-3xl"></i> Dashboard Admin
+    </h2>
+
+    <!-- Statistik -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+      <div class="bg-white rounded-2xl shadow-md hover:shadow-lg transition p-6 text-center border-t-4 border-blue-600">
+        <i class="bx bxs-user text-4xl text-blue-600"></i>
+        <h3 class="text-sm text-gray-500 mt-2">Total Pendaftar</h3>
+        <p class="text-4xl font-bold text-blue-700 mt-1">{{ total_pendaftar }}</p>
+      </div>
+      <div class="bg-white rounded-2xl shadow-md hover:shadow-lg transition p-6 text-center border-t-4 border-green-500">
+        <i class="bx bxs-graduation text-4xl text-green-500"></i>
+        <h3 class="text-sm text-gray-500 mt-2">Rata-rata IPK</h3>
+        <p class="text-4xl font-bold text-green-600 mt-1">{{ avg_ipk }}</p>
+      </div>
+      <div class="bg-white rounded-2xl shadow-md hover:shadow-lg transition p-6 text-center border-t-4 border-yellow-500">
+        <i class="bx bxs-calendar text-4xl text-yellow-500"></i>
+        <h3 class="text-sm text-gray-500 mt-2">Pendaftar Hari Ini</h3>
+        <p class="text-4xl font-bold text-yellow-600 mt-1">{{ pendaftar_hari_ini }}</p>
+      </div>
+    </div>
+
+    <!-- Tabel Data -->
+    <div class="bg-white rounded-2xl shadow overflow-hidden mb-12">
+      <div class="p-4 border-b flex justify-between items-center bg-blue-50">
+        <h3 class="text-lg font-semibold text-blue-700 flex items-center gap-2">
+          <i class="bx bxs-user-detail text-xl"></i> Data Pendaftar Beasiswa
+        </h3>
+        <a href="{{ url_for('form') }}" class="bg-blue-600 hover:bg-blue-700 transition text-white px-4 py-2 rounded-md text-sm flex items-center gap-1">
+          <i class="bx bx-plus"></i> Tambah Data
+        </a>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-sm text-left text-gray-600">
+          <thead class="bg-blue-100 border-b">
+            <tr>
+              <th class="py-3 px-4">Nama</th>
+              <th class="py-3 px-4">NIM</th>
+              <th class="py-3 px-4">IPK</th>
+              <th class="py-3 px-4">Penghasilan</th>
+              <th class="py-3 px-4">Tanggungan</th>
+              <th class="py-3 px-4">Tanggal Daftar</th>
+              <th class="py-3 px-4 text-center">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if applicants %}
+              {% for a in applicants %}
+              <tr class="border-b hover:bg-blue-50 transition">
+                <td class="py-3 px-4">{{ a.nama }}</td>
+                <td class="py-3 px-4">{{ a.nim }}</td>
+                <td class="py-3 px-4">{{ a.ipk }}</td>
+                <td class="py-3 px-4">{{ "{:,.0f}".format(a.penghasilan) }}</td>
+                <td class="py-3 px-4">{{ a.tanggungan }}</td>
+                <td class="py-3 px-4">{{ a.created_at }}</td>
+                <td class="py-3 px-4 text-center space-x-2">
+                  <a href="/admin/detail/{{ a.id }}" class="text-green-600 hover:underline flex items-center gap-1 inline-block">
+                    <i class="bx bx-show"></i> Detail
+                  </a>
+                  <a href="/admin/edit/{{ a.id }}" class="text-blue-600 hover:underline flex items-center gap-1 inline-block">
+                    <i class="bx bx-edit"></i> Edit
+                  </a>
+                  <a href="/admin/delete/{{ a.id }}" class="text-red-600 hover:underline flex items-center gap-1 inline-block"
+                     onclick="return confirm('Yakin ingin menghapus data ini?')">
+                    <i class="bx bx-trash"></i> Hapus
+                  </a>
+                </td>
+              </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td colspan="7" class="py-4 text-center text-gray-500">Belum ada data pendaftar.</td>
+              </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Hasil Perhitungan AHP -->
+    <div class="bg-white rounded-2xl shadow overflow-hidden">
+      <div class="p-4 border-b bg-blue-50 flex items-center gap-2">
+        <i class="bx bx-line-chart text-xl text-blue-700"></i>
+        <h3 class="text-lg font-semibold text-blue-700">Hasil Perhitungan AHP (Peringkat Beasiswa)</h3>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-sm text-left text-gray-600">
+          <thead class="bg-blue-100 border-b">
+            <tr>
+              <th class="py-3 px-4">Peringkat</th>
+              <th class="py-3 px-4">Nama</th>
+              <th class="py-3 px-4">Skor AHP</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if ahp_results %}
+              {% for r in ahp_results %}
+              <tr class="border-b hover:bg-blue-50 transition">
+                <td class="py-3 px-4 font-bold text-blue-700">{{ loop.index }}</td>
+                <td class="py-3 px-4">{{ r.nama }}</td>
+                <td class="py-3 px-4">{{ "%.4f"|format(r.skor) }}</td>
+              </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td colspan="3" class="py-4 text-center text-gray-500">Belum ada hasil perhitungan AHP.</td>
+              </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="bg-blue-700 text-white text-center py-4 mt-12">
+    <p class="text-sm">&copy; 2025 STIKOM El Rahma | Sistem Beasiswa AHP</p>
+  </footer>
+
+</body>
+</html>

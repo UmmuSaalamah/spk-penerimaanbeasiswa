@@ -1,0 +1,63 @@
+{% extends "admin_base.html" %}
+{% block content %}
+
+<h3 class="mb-3">Daftar Kriteria AHP</h3>
+
+<!-- FORM TAMBAH KRITERIA -->
+<form method="POST" action="{{ url_for('admin_kriteria') }}" class="row g-2 mb-4">
+    <div class="col-md-3">
+        <input type="text" name="kode" class="form-control" placeholder="Kode (C1)" required>
+    </div>
+    <div class="col-md-5">
+        <input type="text" name="nama" class="form-control" placeholder="Nama Kriteria" required>
+    </div>
+    <div class="col-md-2">
+        <input type="number" step="0.01" name="bobot" class="form-control" placeholder="Bobot" required>
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">
+            Tambah
+        </button>
+    </div>
+</form>
+
+<!-- TABEL KRITERIA -->
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>No</th>
+            <th>Kode</th>
+            <th>Nama Kriteria</th>
+            <th>Bobot</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for k in kriteria %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ k.kode }}</td>
+            <td>{{ k.nama }}</td>
+            <td>{{ "%.2f"|format(k.bobot) }}</td>
+            <td>
+                <form method="POST"
+                      action="{{ url_for('admin_kriteria_delete', id=k.id) }}"
+                      onsubmit="return confirm('Hapus kriteria ini?')"
+                      style="display:inline;">
+                    <button class="btn btn-danger btn-sm">
+                        Delete
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="5" class="text-center text-muted">
+                Belum ada kriteria
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

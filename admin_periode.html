@@ -1,0 +1,53 @@
+{% extends "admin_base.html" %}
+{% block title %}Manajemen Periode{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Manajemen Periode Beasiswa</h2>
+
+    <!-- Flash message -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, msg in messages %}
+        <div class="alert alert-{{ category }}">{{ msg }}</div>
+      {% endfor %}
+    {% endwith %}
+
+    <!-- Form tambah periode -->
+    <form method="post" class="mb-4">
+        <div class="row">
+            <div class="col-md-4">
+                <input type="text" name="nama" class="form-control" placeholder="Nama Periode" required>
+            </div>
+            <div class="col-md-3">
+                <input type="date" name="mulai" class="form-control" required>
+            </div>
+            <div class="col-md-3">
+                <input type="date" name="selesai" class="form-control" required>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary w-100">Tambah</button>
+            </div>
+        </div>
+    </form>
+
+    <!-- Tabel periode -->
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nama</th>
+                <th>Mulai</th>
+                <th>Selesai</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in periode %}
+            <tr>
+                <td>{{ p['nama'] }}</td>
+                <td>{{ p['mulai'] }}</td>
+                <td>{{ p['selesai'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
