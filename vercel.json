@@ -1,0 +1,31 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "routes": [
+    { "src": "^/$", "dest": "/index.html" },
+
+    { "src": "^/login$", "dest": "/admin_login.html" },
+    { "src": "^/logout$", "dest": "/admin_logout.html" },
+
+    { "src": "^/admin$", "dest": "/admin_dashboard.html" },
+    { "src": "^/admin/dashboard$", "dest": "/admin_dashboard.html" },
+
+    { "src": "^/admin/user$", "dest": "/admin_user.html" },
+    { "src": "^/admin/kriteria$", "dest": "/admin_kriteria.html" },
+    { "src": "^/admin/subkriteria$", "dest": "/admin_subkriteria.html" },
+    { "src": "^/admin/matriks$", "dest": "/admin_matriks.html" },
+    { "src": "^/admin/penilaian$", "dest": "/admin_penilaian.html" },
+    { "src": "^/admin/penilaian-input$", "dest": "/admin_penilaian_input.html" },
+    { "src": "^/admin/hasil$", "dest": "/admin_hasil.html" },
+    { "src": "^/admin/pairwise$", "dest": "/admin_pairwise.html" },
+    { "src": "^/admin/periode$", "dest": "/admin_periode.html" },
+    { "src": "^/admin/verify$", "dest": "/admin_verify_otp.html" },
+
+    { "src": "^/mahasiswa/login$", "dest": "/mahasiswa_login.html" },
+    { "src": "^/mahasiswa/register$", "dest": "/mahasiswa_register.html" },
+    { "src": "^/mahasiswa/dashboard$", "dest": "/mahasiswa_dashboard.html" },
+    { "src": "^/mahasiswa/update$", "dest": "/mahasiswa_update.html" },
+
+    { "src": "^(.*)$", "dest": "/$1" }
+  ]
+}
