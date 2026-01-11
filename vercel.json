@@ -1,5 +1,10 @@
 {
   "routes": [
+    {
+      "src": "^/static/(.*)$",
+      "dest": "/static/$1"
+    },
+
     { "src": "^/$", "dest": "/index.html" },
 
     { "src": "^/login$", "dest": "/admin_login.html" },
@@ -24,6 +29,9 @@
     { "src": "^/mahasiswa/dashboard$", "dest": "/mahasiswa_dashboard.html" },
     { "src": "^/mahasiswa/update$", "dest": "/mahasiswa_update.html" },
 
-    { "src": "^(.*)$", "dest": "/$1" }
+    {
+      "src": "^(.*)$",
+      "dest": "/$1"
+    }
   ]
 }
